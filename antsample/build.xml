@@ -1,0 +1,38 @@
+<project default="jar" name="antsample project">
+	<description>
+		Sample ant project
+	</description>
+<!-- setting global properties for this build syntax>
+<property name="src" location="src"/>-->
+	
+    <target name="clean" description="remove classes and jar folder">
+        <delete dir="classes,target"/>
+    	<!--<delete dir="target"/>-->
+    	<echo>Cleaning the classes and targets</echo>
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="classes"/>
+    	<mkdir dir="target"/>
+    	 <!--  <javac includeantruntime="false" srcdir="src" destdir="target"/>-->
+    	<javac includeantruntime="false" srcdir="src" destdir="classes"/>
+    	<echo> Compiling the modules</echo>
+    </target>
+ <!-- removing depends as it performs again-->
+    <target name="run" depends="compile">
+        <!--<java classname="com.gitant.antsample.gitsample" fork="true"/>-->
+    	<!--<java jar="target/antsample.jar" fork="true"/>-->
+    	<java classname="com.gitant.antsample.gitsample">
+    		<classpath path="classes"/>
+    	</java>
+    	<echo> running the module </echo>
+    </target>
+	<target name="jar" depends="run">
+	        <jar destfile="target/antsample.jar" includes="**/*.class" basedir="classes">
+	       <manifest>
+	                <attribute name="Main-class" value="com.gitant.antsample.gitsample"/>
+	        </manifest>	        
+	       </jar>
+	    	<echo> Creating jar file after compilation</echo>
+	    </target>
+</project>
